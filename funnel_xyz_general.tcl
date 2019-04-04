@@ -1,5 +1,3 @@
-# to update the variable along the trajectory use:  trace variable vmd_frame(0) w cv_axis
-
 proc cv_axis { Ligand Z_init Z_final Z_cc Alpha R_cyl } {
 
 foreach i [molinfo list] {
@@ -9,7 +7,6 @@ $allatoms update
 set frame [molinfo $i get frame]
 
 graphics $i delete all
-
 
 ## DEFINE A and B as coordinates
  set cm_A_x [lindex $Z_init 0]
