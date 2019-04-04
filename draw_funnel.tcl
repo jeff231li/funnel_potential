@@ -9,12 +9,11 @@ set R_cyl 1.0  ;# Radius of cylinder
 ## Axis Vector       ##
 #######################
 # Initial Point
-set s1 [atomselect top "segname A and resid 401 and name CA"]
+set s1 [atomselect top "insert selection for point A here"]
 set c1 [measure center $s1 weight mass]
 
 # Final Point
-#set s2 [atomselect top "segname W1 and resid 984 and name H1"]
-set s2 [atomselect top "segname W2 and resid 6417 and name OH2"]
+set s2 [atomselect top "insert selection for point B here"]
 set c2 [measure center $s2 weight mass]
 
 # Axis
@@ -23,8 +22,8 @@ set axis [vecnorm [vecsub $c2 $c1]]
 #######################
 ## Funnel A-B Points ##
 #######################
-# Ion Ligand
-set lig [atomselect top "segname ION3 and resid 1"]
+# Ligand Molecule
+set lig [atomselect top "insert selection for ligand"]
 set cl [measure center $lig weight mass]
 
 # Funnel Initial Points
