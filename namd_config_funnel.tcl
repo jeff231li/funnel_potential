@@ -17,4 +17,4 @@ set pdbColValue 8.0
 set FunnelFreq  500
 set FunnelOut   FM01.dat
 
-tclForcesScript funnel.tcl
+tclForcesScript funnel_potential.tcl
