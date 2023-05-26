@@ -44,8 +44,8 @@ def add_funnel_potential(
     funnel.addGlobalParameter("R_cylinder", R_cylinder)
 
     # Add host and guest indices
-    g1 = funnel.addGroup(host_index)
-    g2 = funnel.addGroup(guest_index)
+    g1 = funnel.addGroup(host_index, [1.0 for i in range(len(host_index))])
+    g2 = funnel.addGroup(guest_index, [1.0 for i in range(len(guest_index))])
 
     # Add bond
     funnel.addBond([g1, g2], [])
@@ -78,8 +78,8 @@ def add_reaction_coordinate(
     reaction.addPerBondParameter("z_0", z_0)
 
     # Add host and guest indices
-    g1 = reaction.addGroup(host_index)
-    g2 = reaction.addGroup(guest_index)
+    g1 = funnel.addGroup(host_index, [1.0 for i in range(len(host_index))])
+    g2 = funnel.addGroup(guest_index, [1.0 for i in range(len(guest_index))])
 
     # Add bond
     reaction.addBond([g1, g2], [k_z, z_0])
