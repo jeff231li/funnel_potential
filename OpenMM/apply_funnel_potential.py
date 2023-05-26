@@ -2,20 +2,20 @@
 
 from typing import List, Optional
 
-import simtk.openmm as openmm
-import simtk.unit as simtk_unit
+import openmm
+import openmm.unit as openmm_unit
 
 
 def add_funnel_potential(
     system: openmm.System,
     host_index: List[int],
     guest_index: List[int],
-    k_xy: Optional[simtk_unit.Quantity] = 10.0
-    * simtk_unit.kilocalorie_per_mole
-    / simtk_unit.angstrom ** 2,
-    z_cc: Optional[simtk_unit.Quantity] = 11.0 * simtk_unit.angstrom,
-    alpha: Optional[simtk_unit.Quantity] = 35.0 * simtk_unit.degrees,
-    R_cylinder: Optional[simtk_unit.Quantity] = 1.0 * simtk_unit.angstrom,
+    k_xy: Optional[openmm_unit.Quantity] = 10.0
+    * openmm_unit.kilocalorie_per_mole
+    / openmm_unit.angstrom**2,
+    z_cc: Optional[openmm_unit.Quantity] = 11.0 * openmm_unit.angstrom,
+    alpha: Optional[openmm_unit.Quantity] = 35.0 * openmm_unit.degrees,
+    R_cylinder: Optional[openmm_unit.Quantity] = 1.0 * openmm_unit.angstrom,
     force_group: Optional[int] = 10,
 ):
     """
@@ -26,9 +26,10 @@ def add_funnel_potential(
     funnel = openmm.CustomCentroidBondForce(
         2,
         "U_funnel + U_cylinder;"
-        "U_funnel = step(z_cc - abs(r_z))*step(r_xy - R_funnel)*Wall;"
-        "U_cylinder = step(abs(r_z) - z_cc)*step(r_xy - R_cylinder)*Wall;"
-        "Wall = 0.5 * k_xy * r_xy^2;"
+        "U_funnel = step(z_cc - abs(r_z))*step(r_xy - R_funnel)*Wall_funnel;"
+        "U_cylinder = step(abs(r_z) - z_cc)*step(r_xy - R_cylinder)*Wall_cylinder;"
+        "Wall_funnel = 0.5 * k_xy * (r_xy - R_funnel)^2;"
+        "Wall_cylinder = 0.5 * k_xy * (r_xy - R_cylinder)^2;"
         "R_funnel = (z_cc-abs(r_z))*tan(alpha) + R_cylinder;"
         "r_xy = sqrt((x2 - x1)^2 + (y2 - y1)^2);"
         "r_z = z2 - z1;",
@@ -57,8 +58,8 @@ def add_reaction_coordinate(
     system: openmm.System,
     host_index: List[int],
     guest_index: List[int],
-    k_z: simtk_unit.Quantity,
-    z_0: simtk_unit.Quantity,
+    k_z: openmm_unit.Quantity,
+    z_0: openmm_unit.Quantity,
     force_group: Optional[int] = 11,
 ):
     """
